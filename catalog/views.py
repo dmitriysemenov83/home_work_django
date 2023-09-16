@@ -5,8 +5,8 @@ from catalog.models import Category, Product
 
 def home(request):
     context = {
-        'object_list': Category.objects.all(),
-        'title': 'Магазин - Главная'
+        'object_list': Product.objects.all(),
+        'title': 'Наш ассортимент'
     }
     return render(request, 'catalog/home.html', context)
 
@@ -17,8 +17,8 @@ def contacts(request):
 
 def goods(request):
     context = {
-        'object_list': Category.objects.all(),
-        'title': 'Магазин - Наши товары'
+        'object_list': Product.objects.all(),
+        'title': 'Наши товары'
     }
     return render(request, 'catalog/goods.html', context)
 
@@ -30,3 +30,4 @@ def category_stuff(request, pk):
         'title': f'{category_item.name}'
     }
     return render(request, 'catalog/stuff.html', context)
+
