@@ -4,12 +4,12 @@ from django.urls import path
 
 from . import views
 from .apps import CatalogConfig
-from .views import goods, home, category_stuff
+from .views import HomeView, GoodsView
 
 app_name = CatalogConfig.name
 
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('goods/', goods, name='goods'),
+    path('', HomeView.as_view(), name='home'),
+    path('goods/', GoodsView.as_view(), name='goods'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,26 +1,27 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from catalog.models import Category, Product
 
 
-def home(request):
-    context = {
-        'object_list': Product.objects.all(),
+class HomeView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    extra_context = {
         'title': 'Наш ассортимент'
     }
-    return render(request, 'catalog/home.html', context)
 
 
 def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-def goods(request):
-    context = {
-        'object_list': Product.objects.all(),
+class GoodsView(ListView):
+    model = Product
+    template_name = 'catalog/goods.html'
+    extra_context = {
         'title': 'Наши товары'
     }
-    return render(request, 'catalog/goods.html', context)
 
 
 def category_stuff(request, pk):
@@ -30,4 +31,3 @@ def category_stuff(request, pk):
         'title': f'{category_item.name}'
     }
     return render(request, 'catalog/stuff.html', context)
-
