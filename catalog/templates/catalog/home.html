@@ -11,6 +11,7 @@
                     <div class="card-body">
                         <p class="card-text">Товар: {{ object.name }}</p>
                         <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                        <span class="text-muted">{{ object.user|default:"нет" }}</span>
                         {% for version in object.versions.all %}
                             {% if version.is_current %}<p class="card-text">{{ version.number }}</p>
                             {% endif %}{% endfor %}
