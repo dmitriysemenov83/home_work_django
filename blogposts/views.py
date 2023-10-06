@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.templatetags.pytils_translit import slugify
@@ -5,7 +6,7 @@ from pytils.templatetags.pytils_translit import slugify
 from blogposts.models import Blogpost
 
 
-class BlogpostCreateView(CreateView):
+class BlogpostCreateView(LoginRequiredMixin, CreateView):
     model = Blogpost
     fields = ('title', 'content')
     success_url = reverse_lazy('blogposts:list')
@@ -19,7 +20,7 @@ class BlogpostCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogpostUpdateView(UpdateView):
+class BlogpostUpdateView(LoginRequiredMixin, UpdateView):
     model = Blogpost
     fields = ('title', 'content')
     success_url = reverse_lazy('blogposts:list')

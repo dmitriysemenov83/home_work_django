@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from blogposts.models import Blogpost
+
+
+@admin.register(Blogpost)
+class BlogpostAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'preview', 'created_at', 'is_published', 'views_count')
