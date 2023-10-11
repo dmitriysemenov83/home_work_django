@@ -56,6 +56,6 @@ class BlogpostDetailView(DetailView):
         return self.object
 
 
-class BlogpostDeleteView(DeleteView):
+class BlogpostDeleteView(LoginRequiredMixin, DeleteView):
     model = Blogpost
     success_url = reverse_lazy('blogposts:list')
