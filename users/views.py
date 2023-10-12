@@ -29,9 +29,9 @@ class RegisterView(CreateView):
     template_name = 'users/register.html'
 
     def form_valid(self, form):
-        # Save the user object
+        # Сохраняем объект пользователя
         response = super().form_valid(form)
-        # Send a verification email to the user
+        # Отправляем пользователю электронное письмо с подтверждением
         user = form.save(commit=False)
         token = user.generate_verification_token()
         user.save()
