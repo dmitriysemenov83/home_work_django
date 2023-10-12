@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -7,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from catalog.forms import ProductForm, VersionForm
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
 
 
 class HomeView(ListView):
@@ -80,3 +81,18 @@ class ProductDetailView(DetailView):
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')
+
+
+def categories(request):
+
+    key = 'category_list'
+    category_list = cache.get(key)
+    if category_list is None:
+        category_list = Category.objects.all()
+        cache.set(key, category_list)
+
+    context = {
+        'object_list': category_list,
+        'title': 'Категории товаров'
+    }
+    return render(request, 'catalog/categories.html', context=context)
