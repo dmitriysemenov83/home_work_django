@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.cache import cache
@@ -9,6 +10,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Version, Category
+from catalog.services import get_categories_cache
 
 
 class HomeView(ListView):
@@ -85,14 +87,8 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 def categories(request):
 
-    key = 'category_list'
-    category_list = cache.get(key)
-    if category_list is None:
-        category_list = Category.objects.all()
-        cache.set(key, category_list)
-
     context = {
-        'object_list': category_list,
+        'object_list': get_categories_cache(),
         'title': 'Категории товаров'
     }
     return render(request, 'catalog/categories.html', context=context)
